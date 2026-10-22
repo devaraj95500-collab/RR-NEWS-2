@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#092b62">
+<title>RR NEWS Telugu Studio</title>
+<style>
+:root{--red:#c8102e;--blue:#092b62;--blue2:#1357a6;--bg:#eef2f8;--ink:#172033}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Arial,"Noto Sans Telugu",sans-serif;color:var(--ink)}
+header{background:linear-gradient(115deg,var(--blue),var(--blue2));color:#fff;padding:18px 15px;border-bottom:5px solid var(--red)}
+.brand{display:flex;align-items:center;gap:12px}.logo{font-weight:900;font-size:19px;line-height:1.05;text-align:center;background:var(--red);border:2px solid #fff;border-radius:8px;padding:9px 11px}
+h1{font-size:21px;margin:0}header p{margin:5px 0 0;font-size:13px}.pill{display:inline-block;background:var(--red);padding:5px 9px;border-radius:4px;font-size:12px;font-weight:bold;margin-top:12px}
+main{max-width:900px;margin:16px auto;padding:0 12px 28px}.card{background:#fff;border-radius:14px;padding:16px;margin-bottom:14px;box-shadow:0 4px 16px #15294d12}
+h2{font-size:18px;color:var(--blue);margin:0 0 12px}label{display:block;font-size:14px;font-weight:bold;margin:11px 0 6px}
+input,textarea,select{width:100%;font:inherit;border:1px solid #cbd5e1;border-radius:9px;padding:11px;background:#fff}textarea{min-height:135px;resize:vertical;line-height:1.7}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.buttons{display:flex;flex-wrap:wrap;gap:8px;margin-top:13px}
+button{border:0;border-radius:9px;padding:11px 13px;font-weight:bold;font-size:14px;cursor:pointer}.red{background:var(--red);color:#fff}.blue{background:var(--blue);color:#fff}.pale{background:#e8eef8;color:var(--blue)}
+.preview{border:2px solid var(--blue);border-radius:10px;overflow:hidden}.previewHead{background:var(--blue);color:white;padding:13px;display:flex;align-items:center;justify-content:space-between}.previewHead strong{font-size:21px}.live{background:var(--red);padding:5px 7px;border-radius:4px;font-weight:bold;font-size:12px}.headline{background:#e9eef6;border-left:6px solid var(--red);padding:12px;font-size:19px;font-weight:bold;color:var(--blue)}.previewBody{white-space:pre-wrap;padding:15px;line-height:1.8;min-height:100px}.ticker{background:var(--red);color:white;padding:9px 12px;font-weight:bold}
+#photoPreview{max-width:100%;max-height:230px;display:none;margin-top:10px;border-radius:8px}
+.note{font-size:12px;color:#5b6575;line-height:1.6}.status{font-size:13px;margin-top:8px;color:#146c43}
+footer{text-align:center;font-size:12px;color:#64748b;padding:4px 12px 24px}
+@media(max-width:540px){.grid{grid-template-columns:1fr}h1{font-size:18px}.card{padding:13px}}
+@media print{body{background:#fff}header,.editor,.noprint,footer{display:none!important}main{margin:0;padding:0}.card{box-shadow:none;padding:0}.preview{border:1px solid #333}}
+</style>
+</head>
+<body>
+<header>
+ <div class="brand"><div class="logo">RR<br>NEWS</div><div><h1>RR NEWS Telugu Studio</h1><p>తెలుగు న్యూస్ స్క్రిప్ట్ • వాయిస్ • బులెటిన్ ప్రివ్యూ</p></div></div>
+ <span class="pill">● NEWS STUDIO • LIVE • 24x7</span>
+</header>
+<main>
+<section class="card editor">
+<h2>📰 న్యూస్ బులెటిన్ తయారీ</h2>
+<label for="headline">వార్త హెడ్‌లైన్</label><input id="headline" placeholder="ఉదా: చంద్రగిరిలో కీలక అభివృద్ధి కార్యక్రమం">
+<div class="grid">
+ <div><label for="place">ప్రాంతం</label><input id="place" placeholder="చంద్రగిరి"></div>
+ <div><label for="kind">వార్త రకం</label><select id="kind"><option>స్థానిక వార్తలు</option><option>బ్రేకింగ్ న్యూస్</option><option>రాజకీయ వార్తలు</option><option>పోలీస్ వార్తలు</option><option>విద్యా వార్తలు</option><option>వ్యవసాయ వార్తలు</option><option>ప్రజా సమస్యలు</option><option>ఆధ్యాత్మిక వార్తలు</option></select></div>
+</div>
+<label for="script">వార్త వివరాలు / యాంకర్ చదివే స్క్రిప్ట్</label><textarea id="script" placeholder="మీ తెలుగు వార్తలను ఇక్కడ పేస్ట్ చేయండి..."></textarea>
+<label for="tickerInput">క్రింద కనిపించే టిక్కర్</label><input id="tickerInput" value="మరిన్ని స్థానిక వార్తల కోసం చూస్తూనే ఉండండి... RR NEWS">
+<label for="photo">వార్తకు సంబంధించిన ఫోటో (ఐచ్ఛికం)</label><input id="photo" type="file" accept="image/*"><img id="photoPreview" alt="వార్త ఫోటో ప్రివ్యూ">
+<div class="buttons">
+<button class="red" onclick="makePreview()">ప్రివ్యూ తయారు చేయండి</button>
+<button class="blue" onclick="speakNews()">🔊 వాయిస్‌లో చదవండి</button>
+<button class="pale" onclick="stopSpeech()">వాయిస్ ఆపండి</button>
+<button class="pale" onclick="copyScript()">స్క్రిప్ట్ కాపీ</button>
+<button class="pale" onclick="saveScript()">TXT సేవ్</button>
+<button class="pale" onclick="saveDraft()">డ్రాఫ్ట్ సేవ్</button>
+<button class="pale" onclick="loadDraft()">డ్రాఫ్ట్ తెరవండి</button>
+<button class="pale" onclick="clearForm()">క్లియర్</button>
+</div>
+<div id="status" class="status" role="status"></div>
+<p class="note">వాయిస్ బటన్ మీ మొబైల్/బ్రౌజర్‌లో అందుబాటులో ఉన్న Text-to-Speech వాయిస్‌ను ఉపయోగిస్తుంది. తెలుగు వాయిస్ అందుబాటులో లేకపోతే ఫలితం మారవచ్చు.</p>
+</section>
+<section class="card">
+<h2>📺 RR NEWS బులెటిన్ ప్రివ్యూ</h2>
+<div class="preview" id="preview">
+ <div class="previewHead"><strong>RR NEWS <span style="font-size:12px">TELUGU</span></strong><span class="live">LIVE • 24x7</span></div>
+ <div class="headline" id="previewHeadline">మీ వార్త హెడ్‌లైన్ ఇక్కడ కనిపిస్తుంది</div>
+ <div class="previewBody" id="previewBody">వార్త వివరాలు నమోదు చేసి “ప్రివ్యూ తయారు చేయండి” నొక్కండి.</div>
+ <div class="ticker" id="ticker">మరిన్ని స్థానిక వార్తల కోసం చూస్తూనే ఉండండి... RR NEWS</div>
+</div>
+<div class="buttons noprint"><button class="blue" onclick="window.print()">ప్రింట్ / PDFగా సేవ్</button><button class="red" onclick="downloadCard()">ప్రివ్యూ కార్డు PNGగా సేవ్</button></div>
+<p class="note">PNG కార్డులో హెడ్‌లైన్, వార్త వివరాలు, RR NEWS బ్రాండింగ్ ఉంటాయి. అప్లోడ్ చేసిన ఫోటోను ఈ సాధారణ కార్డు ఎగుమతిలో చేర్చడం లేదు.</p>
+</section>
+<section class="card editor">
+<h2>🎬 AI యాంకర్ వీడియో స్టూడియో</h2>
+<p>30–60 సెకన్ల షార్ట్ న్యూస్ లేదా 1–3 నిమిషాల బులెటిన్ కోసం వీడియో అభ్యర్థనను సిద్ధం చేయండి.</p>
+<div class="grid">
+ <div><label for="anchorStyle">యాంకర్ స్టైల్</label><select id="anchorStyle"><option value="saree">చీరలో తెలుగు న్యూస్ యాంకర్</option><option value="modern">ఆధునిక డ్రెస్‌లో న్యూస్ యాంకర్</option></select></div>
+ <div><label for="videoLength">వీడియో నిడివి</label><select id="videoLength"><option value="30-60">30–60 సెకన్లు</option><option value="60-180">1–3 నిమిషాలు</option></select></div>
+ <div><label for="videoQuality">వీడియో నాణ్యత</label><select id="videoQuality"><option value="high">హై-క్వాలిటీ AI యాంకర్</option><option value="standard">స్టాండర్డ్</option></select></div>
+ <div><label for="voiceStyle">తెలుగు వాయిస్</label><select id="voiceStyle"><option value="female">మహిళా తెలుగు వాయిస్</option><option value="male">పురుష తెలుగు వాయిస్</option></select></div>
+</div>
+<label for="apiEndpoint">AI వీడియో సర్వర్ URL (సర్వర్ ఏర్పాటు చేసిన తర్వాత మాత్రమే)</label><input id="apiEndpoint" type="url" placeholder="https://your-server.example.com/api/video/generate" autocomplete="url">
+<div class="buttons"><button class="red" onclick="requestAIVideo()">AI వీడియో అభ్యర్థన పంపండి</button><button class="pale" onclick="saveApiSettings()">సర్వర్ URL సేవ్</button><button class="pale" onclick="clearApiSettings()">URL తొలగించండి</button></div>
+<div id="videoStatus" class="status" role="status" aria-live="polite"></div>
+<div id="videoResult" class="note"></div>
+<p class="note">పారదర్శక గమనిక: ఈ ప్రాజెక్ట్‌లో నిజమైన AI వీడియో ప్రొవైడర్ ఇంకా కనెక్ట్ కాలేదు. URL ఖాళీగా ఉంటే అభ్యర్థన పంపబడదు. పని చేసే వీడియో కోసం బ్యాక్‌ఎండ్ సర్వర్ మరియు AI సేవ API credentials అవసరం. API secret keyని ఈ యాప్‌లో లేదా పబ్లిక్ GitHub రిపాజిటరీలో పెట్టవద్దు.</p>
+</section>
+<section class="card">
+<h2>🧩 తదుపరి అనుసంధానాలు</h2>
+<div class="grid"><div>👩 చీర / ఆధునిక AI యాంకర్</div><div>🎙️ తెలుగు AI వాయిస్</div><div>👄 వాయిస్‌కు సరిపోయే లిప్-సింక్</div><div>🎬 MP4 తయారీ మరియు డౌన్‌లోడ్</div><div>🔴 RR NEWS టిక్కర్ / బ్రాండింగ్</div><div>▶️ YouTube అప్లోడ్ OAuth అనుసంధానం</div></div>
+<p class="note">ఈ బటన్ AI వీడియో సేవకు కనెక్ట్ అయినట్లు నటించదు: ఇది కాన్ఫిగర్ చేసిన బ్యాక్‌ఎండ్ URLకు మాత్రమే అభ్యర్థన పంపుతుంది. బ్యాక్‌ఎండ్ ఇంకా ఏర్పాటు చేయకపోతే ముందుగా సర్వర్‌ను అభివృద్ధి చేసి హోస్ట్ చేయాలి.</p>
+</section>
+</main>
+<footer>RR NEWS Telugu Studio • మొబైల్ వెబ్ యాప్ ప్రోటోటైప్</footer>
+<script>
+const $=id=>document.getElementById(id);
+function makePreview(){
+ $('previewHeadline').textContent=$('headline').value.trim()||'మీ వార్త హెడ్‌లైన్ ఇక్కడ కనిపిస్తుంది';
+ const p=$('place').value.trim(), k=$('kind').value, s=$('script').value.trim();
+ $('previewBody').textContent=(p?'ప్రాంతం: '+p+'\\n':'')+'వార్త రకం: '+k+'\\n\\n'+(s||'వార్త వివరాలు నమోదు చేయండి.');
+ $('ticker').textContent=$('tickerInput').value.trim()||'RR NEWS Telugu';
+ $('status').textContent='ప్రివ్యూ అప్‌డేట్ అయింది.';
+}
+function fullScript(){return [$('headline').value.trim(),$('place').value.trim()?'ప్రాంతం: '+$('place').value.trim():'','వార్త రకం: '+$('kind').value,'',$('script').value.trim()].filter(Boolean).join('\\n')}
+function saveScript(){const blob=new Blob([fullScript()],{type:'text/plain;charset=utf-8'});downloadBlob(blob,'RR_NEWS_Telugu_Script.txt');$('status').textContent='స్క్రిప్ట్ TXT ఫైల్‌గా సేవ్ చేయబడుతోంది.'}
+function downloadBlob(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+async function copyScript(){try{await navigator.clipboard.writeText(fullScript());$('status').textContent='స్క్రిప్ట్ కాపీ అయింది.'}catch(e){$('script').focus();$('script').select();$('status').textContent='స్క్రిప్ట్‌ను సెలెక్ట్ చేశాం; Copy ఎంచుకోండి.'}}
+function saveDraft(){const data={headline:$('headline').value,place:$('place').value,kind:$('kind').value,script:$('script').value,ticker:$('tickerInput').value};localStorage.setItem('rrnewsDraft',JSON.stringify(data));$('status').textContent='ఈ బ్రౌజర్‌లో డ్రాఫ్ట్ సేవ్ అయింది.'}
+function loadDraft(){try{const d=JSON.parse(localStorage.getItem('rrnewsDraft')||'null');if(!d){$('status').textContent='సేవ్ చేసిన డ్రాఫ్ట్ దొరకలేదు.';return}$('headline').value=d.headline||'';$('place').value=d.place||'';$('kind').value=d.kind||'స్థానిక వార్తలు';$('script').value=d.script||'';$('tickerInput').value=d.ticker||'';makePreview();$('status').textContent='డ్రాఫ్ట్ తెరవబడింది.'}catch(e){$('status').textContent='డ్రాఫ్ట్ తెరవలేకపోయాం.'}}
+function speakNews(){if(!('speechSynthesis'in window)){alert('ఈ బ్రౌజర్‌లో వాయిస్ చదివే సదుపాయం లేదు.');return}stopSpeech();const text=[$('headline').value,$('script').value].filter(Boolean).join('. ');if(!text.trim()){alert('ముందుగా హెడ్‌లైన్ లేదా స్క్రిప్ట్ నమోదు చేయండి.');return}const u=new SpeechSynthesisUtterance(text);u.lang='te-IN';u.rate=.9;const voices=speechSynthesis.getVoices();const v=voices.find(x=>x.lang.toLowerCase().startsWith('te'));if(v)u.voice=v;u.onstart=()=>$('status').textContent='వాయిస్ ప్లే అవుతోంది.';u.onend=()=>$('status').textContent='వాయిస్ పూర్తయింది.';u.onerror=()=>$('status').textContent='వాయిస్ ప్లే కాలేదు; మీ బ్రౌజర్ వాయిస్ సెట్టింగ్స్ చూడండి.';speechSynthesis.speak(u)}
+function stopSpeech(){if('speechSynthesis'in window)speechSynthesis.cancel()}
+function clearForm(){$('headline').value='';$('place').value='';$('script').value='';$('photo').value='';$('photoPreview').style.display='none';makePreview();$('status').textContent='ఫారమ్ క్లియర్ అయింది.'}
+$('photo').addEventListener('change',e=>{const f=e.target.files&&e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{$('photoPreview').src=r.result;$('photoPreview').style.display='block'};r.readAsDataURL(f)});
+function downloadCard(){
+ makePreview();const c=document.createElement('canvas'),ctx=c.getContext('2d');c.width=1080;c.height=720;
+ ctx.fillStyle='#f0f3f8';ctx.fillRect(0,0,c.width,c.height);
+ ctx.fillStyle='#092b62';ctx.fillRect(0,0,c.width,115);ctx.fillStyle='#c8102e';ctx.fillRect(0,115,c.width,8);
+ ctx.fillStyle='#fff';ctx.font='bold 54px Arial';ctx.fillText('RR NEWS',42,70);ctx.font='bold 25px Arial';ctx.fillText('TELUGU  •  LIVE  •  24x7',42,100);
+ ctx.fillStyle='#c8102e';ctx.fillRect(0,160,14,110);ctx.fillStyle='#092b62';ctx.font='bold 34px Arial';wrapText(ctx,$('headline').value||'RR NEWS Telugu',40,205,990,43,3);
+ ctx.fillStyle='#172033';ctx.font='26px Arial';wrapText(ctx,$('script').value||'వార్త వివరాలు నమోదు చేయండి.',42,320,990,39,7);
+ ctx.fillStyle='#c8102e';ctx.fillRect(0,650,c.width,70);ctx.fillStyle='#fff';ctx.font='bold 25px Arial';ctx.fillText(($('tickerInput').value||'RR NEWS').slice(0,65),30,693);
+ c.toBlob(b=>{if(b)downloadBlob(b,'RR_NEWS_Preview.png')});
+}
+function wrapText(ctx,text,x,y,maxWidth,lineHeight,maxLines){let line='',lines=0;for(const word of text.split(/\s+/)){const test=line?line+' '+word:word;if(ctx.measureText(test).width>maxWidth&&line){ctx.fillText(line,x,y);y+=lineHeight;lines++;line=word;if(lines>=maxLines-1)break}else line=test}if(line&&lines<maxLines)ctx.fillText(line,x,y)}
+
+function saveApiSettings(){const url=$('apiEndpoint').value.trim();if(url&&!/^https:\/\//i.test(url)){ $('videoStatus').textContent='సురక్షిత HTTPS URL ఇవ్వండి.';return;}localStorage.setItem('rrnewsVideoEndpoint',url);$('videoStatus').textContent=url?'సర్వర్ URL ఈ పరికరంలో సేవ్ అయింది.':'సర్వర్ URL ఖాళీగా ఉంది.'}
+function clearApiSettings(){$('apiEndpoint').value='';localStorage.removeItem('rrnewsVideoEndpoint');$('videoStatus').textContent='సేవ్ చేసిన సర్వర్ URL తొలగించబడింది.';$('videoResult').textContent=''}
+async function requestAIVideo(){
+ const endpoint=$('apiEndpoint').value.trim()||localStorage.getItem('rrnewsVideoEndpoint')||'';
+ const headline=$('headline').value.trim(),script=$('script').value.trim();
+ $('videoResult').textContent='';
+ if(!headline&&!script){$('videoStatus').textContent='ముందుగా హెడ్‌లైన్ లేదా వార్త స్క్రిప్ట్ నమోదు చేయండి.';return;}
+ if(!endpoint){$('videoStatus').textContent='AI వీడియో సేవ ఇంకా కనెక్ట్ కాలేదు. ముందుగా బ్యాక్‌ఎండ్ సర్వర్ URLను ఏర్పాటు చేయాలి.';return;}
+ if(!/^https:\/\//i.test(endpoint)){$('videoStatus').textContent='భద్రత కోసం HTTPS సర్వర్ URL మాత్రమే ఉపయోగించండి.';return;}
+ $('videoStatus').textContent='AI వీడియో అభ్యర్థన పంపుతోంది…';
+ const payload={brand:'RR NEWS Telugu',headline,place:$('place').value.trim(),category:$('kind').value,script,ticker:$('tickerInput').value.trim(),anchor_style:$('anchorStyle').value,duration:$('videoLength').value,quality:$('videoQuality').value,voice:$('voiceStyle').value,output_format:'mp4'};
+ try{const response=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});let data={};try{data=await response.json()}catch(e){}
+ if(!response.ok)throw new Error(data.message||('సర్వర్ లోపం: '+response.status));
+ if(data.video_url){$('videoStatus').textContent='సర్వర్ వీడియో లింక్‌ను అందించింది.';const a=document.createElement('a');a.href=data.video_url;a.textContent='MP4 వీడియోను తెరవండి / డౌన్‌లోడ్ చేయండి';a.target='_blank';a.rel='noopener';$('videoResult').appendChild(a);}
+ else{$('videoStatus').textContent=data.message||'అభ్యర్థన సర్వర్‌కు చేరింది. వీడియో సిద్ధమైనప్పుడు సర్వర్ status లేదా video_url ఇవ్వాలి.';if(data.job_id){$('videoResult').textContent='Job ID: '+data.job_id;}}
+ }catch(err){$('videoStatus').textContent='అభ్యర్థన విఫలమైంది: '+err.message+' — URL, ఇంటర్నెట్, CORS మరియు సర్వర్ అమరికలను తనిఖీ చేయండి.';}
+}
+$('apiEndpoint').value=localStorage.getItem('rrnewsVideoEndpoint')||'';
+makePreview();
+</script>
+</body></html>

@@ -1,0 +1,34 @@
+RR NEWS Telugu — AI VIDEO INTEGRATION NOTES
+===========================================
+
+Updated integration plan:
+- Telugu TTS candidate: Sarvam AI Bulbul (te-IN, multiple voices).
+- Talking-avatar video candidate: D-ID API.
+- A private HTTPS audio file host/storage is also required to pass generated audio to the avatar service.
+- See ai-backend-starter/README_TELUGU.md for a backend starter and required environment secrets.
+
+Official documentation:
+Sarvam TTS: https://docs.sarvam.ai/api/api-guides-tutorials/text-to-speech/rest-api
+Sarvam models/languages: https://docs.sarvam.ai/api/getting-started/models
+D-ID quickstart: https://docs.d-id.com/docs/quickstart
+D-ID create talk API: https://docs.d-id.com/reference/createtalk
+
+APP REQUEST
+-----------
+The app sends POST JSON to the HTTPS URL configured in the AI Video Studio screen. It expects either:
+{ "video_url": "https://your-server.example.com/videos/job123.mp4" }
+or asynchronous response:
+{ "job_id": "job123", "message": "వీడియో తయారవుతోంది" }
+
+SECURITY
+--------
+Keep all AI provider API keys in server-side environment secrets. Never place keys in index.html, Android source, GitHub commits, APK, or this chat.
+
+IMPORTANT STATUS
+----------------
+This project includes a backend starter, not a live AI provider integration. The pipeline (Telugu TTS → secure audio hosting → talking-avatar video → MP4 URL), polling, and real account testing remain to be implemented. The starter returns an explicit configuration error instead of pretending to generate a video.
+YouTube upload needs separate Google OAuth consent and YouTube Data API setup; it is not implemented.
+
+ANDROID BUILD
+-------------
+GitHub Actions builds a debug APK from the Android WebView wrapper. It does not create a signed public-release APK and does not automatically configure AI providers.
