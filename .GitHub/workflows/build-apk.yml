@@ -1,0 +1,40 @@
+name: Build RR NEWS Telugu APK
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/build-apk.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check Android project
+        run: |
+          if [ ! -f "gradlew" ]; then
+            echo "Android Gradle project not found."
+            echo "Upload the complete Android project first."
+            exit 1
+          fi
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Build APK
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: RR-NEWS-Telugu-debug-apk
+          path: app/build/outputs/apk/debug/*.apk
